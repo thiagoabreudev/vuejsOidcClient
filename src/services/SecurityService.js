@@ -5,9 +5,9 @@ import 'babel-polyfill';
 var mgr = new Oidc.UserManager({
   userStore: new Oidc.WebStorageStateStore(),
   authority: 'https://autenticacaodev.demarco.com.br',
-  client_id: 'dmprocess_web_dev',
+  client_id: 'dmprocess_sistema',
   redirect_uri: window.location.origin + '/static/callback.html',
-  response_type: 'id_token token',
+  response_type: 'code',
   scope: 'openid profile',
   post_logout_redirect_uri: window.location.origin + '/index.html',
   silent_redirect_uri: window.location.origin + '/static/silent-renew.html',

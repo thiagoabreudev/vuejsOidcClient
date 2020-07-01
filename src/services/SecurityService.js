@@ -3,12 +3,12 @@ import Oidc from 'oidc-client';
 import 'babel-polyfill';
 
 var mgr = new Oidc.UserManager({
-  userStore: new Oidc.WebStorageStateStore(),  
-  authority: 'https://localhost:44321',
-  client_id: 'vuejsclient',
+  userStore: new Oidc.WebStorageStateStore(),
+  authority: 'http://autenticacaodev.demarco.com.br',
+  client_id: 'dmprocess_web_dev',
   redirect_uri: window.location.origin + '/static/callback.html',
   response_type: 'id_token token',
-  scope: 'openid profile address roles identityserver4api country subscriptionlevel offline_access',
+  scope: 'openid profile',
   post_logout_redirect_uri: window.location.origin + '/index.html',
   silent_redirect_uri: window.location.origin + '/static/silent-renew.html',
   accessTokenExpiringNotificationTime: 10,
@@ -20,7 +20,7 @@ var mgr = new Oidc.UserManager({
 Oidc.Log.logger = console;
 Oidc.Log.level = Oidc.Log.INFO;
 
-mgr.events.addUserLoaded(function (user) {  
+mgr.events.addUserLoaded(function (user) {
   console.log('New User Loaded：', arguments);
   console.log('Acess_token: ', user.access_token)
 });
@@ -30,7 +30,7 @@ mgr.events.addAccessTokenExpiring(function () {
 });
 
 mgr.events.addAccessTokenExpired(function () {
-  console.log('AccessToken Expired：', arguments);  
+  console.log('AccessToken Expired：', arguments);
   alert('Session expired. Going out!');
   mgr.signoutRedirect().then(function (resp) {
     console.log('signed out', resp);
@@ -45,7 +45,7 @@ mgr.events.addSilentRenewError(function () {
 
 mgr.events.addUserSignedOut(function () {
   alert('Going out!');
-  console.log('UserSignedOut：', arguments);  
+  console.log('UserSignedOut：', arguments);
   mgr.signoutRedirect().then(function (resp) {
     console.log('signed out', resp);
   }).catch(function (err) {
@@ -80,7 +80,7 @@ export default class SecurityService {
         if (user == null) {
           self.signIn()
           return resolve(null)
-        } else{          
+        } else{
           return resolve(user)
         }
       }).catch(function (err) {
@@ -114,9 +114,9 @@ export default class SecurityService {
       console.log(err)
     })
   }
-  
+
   // Redirect of the current window to the end session endpoint
-  signOut () {    
+  signOut () {
     mgr.signoutRedirect().then(function (resp) {
       console.log('signed out', resp);
     }).catch(function (err) {
@@ -132,7 +132,7 @@ export default class SecurityService {
         if (user == null) {
           self.signIn()
           return resolve(null)
-        } else{          
+        } else{
           return resolve(user.profile)
         }
       }).catch(function (err) {
@@ -150,7 +150,7 @@ export default class SecurityService {
         if (user == null) {
           self.signIn()
           return resolve(null)
-        } else{          
+        } else{
           return resolve(user.id_token)
         }
       }).catch(function (err) {
@@ -168,7 +168,7 @@ export default class SecurityService {
         if (user == null) {
           self.signIn()
           return resolve(null)
-        } else{          
+        } else{
           return resolve(user.session_state)
         }
       }).catch(function (err) {
@@ -186,7 +186,7 @@ export default class SecurityService {
         if (user == null) {
           self.signIn()
           return resolve(null)
-        } else{          
+        } else{
           return resolve(user.access_token)
         }
       }).catch(function (err) {
@@ -204,7 +204,7 @@ export default class SecurityService {
         if (user == null) {
           self.signIn()
           return resolve(null)
-        } else{          
+        } else{
           return resolve(user.scopes)
         }
       }).catch(function (err) {
@@ -222,7 +222,7 @@ export default class SecurityService {
         if (user == null) {
           self.signIn()
           return resolve(null)
-        } else{          
+        } else{
           return resolve(user.profile.role)
         }
       }).catch(function (err) {

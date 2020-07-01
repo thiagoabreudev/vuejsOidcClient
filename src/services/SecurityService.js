@@ -4,7 +4,7 @@ import 'babel-polyfill';
 
 var mgr = new Oidc.UserManager({
   userStore: new Oidc.WebStorageStateStore(),
-  authority: 'http://autenticacaodev.demarco.com.br',
+  authority: 'https://autenticacaodev.demarco.com.br',
   client_id: 'dmprocess_web_dev',
   redirect_uri: window.location.origin + '/static/callback.html',
   response_type: 'id_token token',
